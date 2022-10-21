@@ -3,22 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import pairwise_distances
 from classifier import NMC
-
-
-def load_mnist_data(filename):
-    data = pd.read_csv(filename)
-    data = np.array(data)  # convert to np.array
-
-    # print(data.shape) row = images, first col = labels
-    # X = [N*D][Y] see slide
-
-    y = data[:, 0]  # all the row, only col 0. These are the LABELS. Labels goes from 0 to 9 and there are a lot of it
-    x = data[:,
-        1:] / 255  # the rest of the matrix, the image matrix (0 to 255 values for each pixels, we divide by 255 so the range is from 0 to 1)
-
-    # the image are stored as row. Every image is 28 by 28 so as a row they become a vector wich lenght is 784
-
-    return x, y
+from data_loader import CDataLoaderMnist
 
 
 def plot_digit(image, shape=(28, 28)):
@@ -52,17 +37,19 @@ def split_data(x, y, tr_fraction=0.5):
 
     return xtr, ytr, xts, yts
 
+
 def test_error(y_pred, yts):
     return (y_pred != yts).mean()
 
 
 # START
-filename = 'data/mnist_train_small.csv'
+data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
+x, y = data_loader.load_data()
+
 clf = NMC()
 
 # IMPLEMENT OF FULL PIPELINE
 
-x, y = load_mnist_data(filename)
 
 n_rep = 10
 ts_err = np.zeros(shape=(n_rep,))
