@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import pairwise_distances
 from classifier import NMC
 from data_loader import CDataLoaderMnist
+from data_perturb import CDataPerturbRandom
 
 
 def plot_digit(image, shape=(28, 28)):
@@ -46,18 +47,14 @@ def test_error(y_pred, yts):
 data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
 x, y = data_loader.load_data()
 
+PRT = CDataPerturbRandom(0, 1, 100)
+Xp = PRT.perturb_dataset(x)
+
+plot_ten_digit(Xp)
+
 clf = NMC()
 
 # IMPLEMENT OF FULL PIPELINE
 
 
-n_rep = 10
-ts_err = np.zeros(shape=(n_rep,))
 
-for rep in range(n_rep):
-    xtr, ytr, xts, yts = split_data(x, y)
-    clf.fit(xtr, ytr)
-    y_pred = clf.predict(xts)
-    ts_err[rep] = test_error(y_pred, yts)
-
-print(ts_err.mean(), 2 * ts_err.std())  # standard deviation --> .std()

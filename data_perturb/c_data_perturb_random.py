@@ -1,4 +1,4 @@
-from c_data_perturb import CDataPerturb
+from .c_data_perturb import CDataPerturb
 import numpy as np
 
 class CDataPerturbRandom(CDataPerturb):
