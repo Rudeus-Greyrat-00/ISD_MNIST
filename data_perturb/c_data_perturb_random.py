@@ -43,15 +43,11 @@ class CDataPerturbRandom(CDataPerturb):
         if K > x.shape[0]:
             v = np.ones(shape=x.shape[0])
         else:
-            for i in range(K):
-                v[i] = 1
+            v[0:K] = 1
             np.random.shuffle(v)
 
-        for item in range(v.shape[0]):
-            if item == 0:
-                xp[item] = x[item]
-            else:
-                xp[item] = np.random.uniform(self._min_value, self.max_value)
+        xp[v==1] = np.random.uniform(self._min_value, self.max_value, size=self._K)
+
 
 
 
