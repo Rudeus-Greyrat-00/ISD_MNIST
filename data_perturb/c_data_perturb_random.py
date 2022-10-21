@@ -36,7 +36,7 @@ class CDataPerturbRandom(CDataPerturb):
     def K(self, value):
         if value < 0:
             raise ValueError("K should be positive")
-        self._K = value
+        self._K = int(value)
 
     def data_perturbation(self, x):
         v = np.zeros(shape=x.shape[0])
@@ -47,7 +47,7 @@ class CDataPerturbRandom(CDataPerturb):
             v[0:self._K] = 1
             np.random.shuffle(v)
 
-        xp[v==1] = np.random.uniform(self._min_value, self.max_value, size=self._K)
+        xp[v==1] = np.random.uniform(self._min_value, self._max_value, size=min(self._K, x.shape[0]))
         xp[v==0] = x[v==0]
         return xp
 
