@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import numpy as np
 
 class CDataPerturb(ABC):
     """
@@ -12,4 +13,7 @@ class CDataPerturb(ABC):
         pass
 
     def perturb_dataset(self, X):
-        pass
+        for i in range(X.shape[1]):
+            self.data_perturbation(X[i, :])
+
+
