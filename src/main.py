@@ -19,7 +19,7 @@ def plot_ten_digit(x, y=None):
         plot_digit(x[i, :])  # call our plot image function
         if y is not None:
             plt.title("Label: " + str(y[i]))
-
+    plt.show()
 
 def split_data(x, y, tr_fraction=0.5):
     num_samples = y.size
@@ -47,10 +47,14 @@ def test_error(y_pred, yts):
 data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
 x, y = data_loader.load_data()
 
-PRT = CDataPerturbRandom(0, 1, 100)
+
+PRT = CDataPerturbRandom(0, 1, 1000)
 Xp = PRT.perturb_dataset(x)
 
+
 plot_ten_digit(Xp)
+
+#print(Xp[0,:])
 
 clf = NMC()
 
