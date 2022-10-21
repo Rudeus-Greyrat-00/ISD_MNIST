@@ -16,7 +16,7 @@ class CDataPerturb(ABC):
 
     def perturb_dataset(self, X):
         Xp = np.zeros(shape=X.shape)
-        for i in range(X.shape[1]):
+        for i in range(X.shape[0]):
             Xp[i, :] = self.data_perturbation(X[i, :])
 
         return Xp
