@@ -48,7 +48,7 @@ data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
 x, y = data_loader.load_data()
 
 
-PRT = CDataPerturbRandom(0, 1, 1000)
+PRT = CDataPerturbRandom(0, 0.1, 100)
 Xp = PRT.perturb_dataset(x)
 
 
