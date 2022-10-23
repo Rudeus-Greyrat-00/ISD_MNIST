@@ -1,7 +1,5 @@
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.metrics import pairwise_distances
 from classifier import NMC
 from data_loader import CDataLoaderMnist
 from data_perturb import CDataPerturbRandom
@@ -55,6 +53,7 @@ clf.fit(xtr, ytr)
 
 Ks = [10, 20, 50, 100, 200, 500]
 sigmas = [10, 20, 200, 200, 500]  # not sure why 200 appears 2 times. Maybe an error in the PDF?
+# is it supposed to be like this --> sigmas = Ks ?
 
 Ker = []
 sigmaer = []
@@ -74,15 +73,13 @@ for sigma in sigmas:
     y_pred = clf.predict(Xp)
     sigmaer.append(test_error(y_pred, yts))
 
-# not sure about this part
-
-plt.figure()
-plt.subplot(1, 2, 1)
+plt.figure(figsize=(10,10))
+plt.subplot(2, 1, 1)
 plt.plot(Ks, Ker)
 plt.title("Random noise for increasing K")
 plt.xlabel("K")
 plt.ylabel("Error rate")
-plt.subplot(1, 2, 2)
+plt.subplot(2, 1, 2)
 plt.plot(sigmas, sigmaer)
 plt.title("Random noise for increasing sigma")
 plt.xlabel("sigma")
