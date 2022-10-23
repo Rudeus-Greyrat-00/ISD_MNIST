@@ -53,5 +53,35 @@ xtr, ytr, xts, yts = split_data(x, y, 0.6)
 clf = NMC()
 clf.fit(xtr, ytr)
 
+Ks = [10, 20, 50, 100, 200, 500]
+sigmas = [10, 20, 200, 200, 500]  # not sure why 200 appears 2 times. Maybe an error in the PDF?
 
+Ker = []
+sigmaer = []
+
+R = CDataPerturbRandom()
+G = CDataPerturbGaussian()
+
+for K in Ks:
+    R.K = K
+    Xp = R.perturb_dataset(xts)
+    y_pred = clf.predict(Xp)
+    Ker.append(test_error(y_pred, yts))
+
+for sigma in sigmas:
+    G.sigma = sigma
+    Xp = G.perturb_dataset(xts)
+    y_pred = clf.predict(Xp)
+    sigmaer.append(test_error(y_pred, yts))
+
+# not sure about this part
+
+plt.figure()
+plt.subplot(1, 2, 1)
+plt.plot(Ks, Ker)
+plt.title("Random noise for increasing K")
+plt.subplot(1, 2, 2)
+plt.plot(sigmas, sigmaer)
+plt.title("Random noise for increasing sigma")
+plt.show()
 

@@ -34,7 +34,7 @@ class NMC(object):
 
         dist = pairwise_distances(xts, self._centroids)
         # it returns the distance matrix (dist), that has this configuration:
-
+        #       0           1           2            9
         # xts1 [distfrom0, distfrom1, distfrom2 ... distfrom9]
         # xts2 [distfrom0, distfrom1, distfrom2 ... distfrom9]
         # ...
