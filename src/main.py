@@ -48,22 +48,10 @@ def test_error(y_pred, yts):
 data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
 x, y = data_loader.load_data()
 
-
-G = CDataPerturbGaussian(0, 1, 100)
-R = CDataPerturbRandom(0, 1, 100)
-
-Xpr = G.perturb_dataset(x)
-Xpg = R.perturb_dataset(x)
-
-
-plot_ten_digit(Xpr)
-plot_ten_digit(Xpg)
-
-#print(Xp[0,:])
+xtr, ytr, xts, yts = split_data(x, y, 0.6)
 
 clf = NMC()
-
-# IMPLEMENT OF FULL PIPELINE
+clf.fit(xtr, ytr)
 
 
 

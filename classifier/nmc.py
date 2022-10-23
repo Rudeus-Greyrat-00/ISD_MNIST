@@ -33,5 +33,16 @@ class NMC(object):
             raise ValueError("The classifier is not trained")
 
         dist = pairwise_distances(xts, self._centroids)
+        # it returns the distance matrix (dist), that has this configuration:
+
+        # xts1 [distfrom0, distfrom1, distfrom2 ... distfrom9]
+        # xts2 [distfrom0, distfrom1, distfrom2 ... distfrom9]
+        # ...
+        # xtslast [distfrom0, distfrom1, distfrom2 ... distfrom9]
+
+        # y_pred = index of minimum distance, axis = 1 means that we do it along columns
+        # y_pred = [mindist_xts1] --> actually is "the index of mindist_xts1" because we are using "argmin"
+        #          [mindist_xts2]
+        # and so on
         y_pred = np.argmin(dist, axis=1)
         return y_pred
