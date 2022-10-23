@@ -1,6 +1,7 @@
 from .c_data_perturb import CDataPerturb
 import numpy as np
 
+
 class CDataPerturbGaussian(CDataPerturb):
 
     def __init__(self, min_value=0, max_value=1, sigma=100.0):
@@ -22,13 +23,13 @@ class CDataPerturbGaussian(CDataPerturb):
 
     @min_value.setter
     def min_value(self, value):
-        if value < 0 and value > 1:
+        if value < 0 or value > 1:
             raise ValueError("Min value parameter should be within 0 and 1")
         self._min_value = value
 
     @max_value.setter
     def max_value(self, value):
-        if value < 0 and value > 1 and value >= self._min_value:
+        if value < 0 or value > 1 or value >= self._min_value:
             raise ValueError("Max value parameter should be within 0 and 1 and greater than min value")
         self._max_value = value
 
@@ -42,6 +43,7 @@ class CDataPerturbGaussian(CDataPerturb):
         :param x:
         :return:
         """
-        pass
-
-
+        xp = x.copy()
+        # https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.normal.html#numpy.random.Generator.normal
+        xp[:] += np.random.normal(loc=0, scale=self._sigma, size=xp.shape[0])
+        return xp
