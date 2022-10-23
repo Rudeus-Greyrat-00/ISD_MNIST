@@ -45,7 +45,10 @@ class CDataPerturbGaussian(CDataPerturb):
         """
         xp = x.copy()
         # https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.normal.html#numpy.random.Generator.normal
-        xp[:] += (self._sigma * np.random.normal(loc=0, scale=1, size=xp.shape[0])) / 255
+        xp[:] += np.random.normal(loc=0, scale=self._sigma, size=xp.shape[0]) / 255
+        # we divide by 255 because we used the range 0 - 1 to store the values of the images
+        # so without dividing by 255, the perturbation with the default value of 100 for sigma, that would work for
+        # a range of 0 - 255 for storing images values, would be excessive.
         xp[xp < self._min_value] = self._min_value
         xp[xp > self._max_value] = self._max_value
         return xp
