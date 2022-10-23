@@ -5,6 +5,7 @@ from sklearn.metrics import pairwise_distances
 from classifier import NMC
 from data_loader import CDataLoaderMnist
 from data_perturb import CDataPerturbRandom
+from data_perturb import CDataPerturbGaussian
 
 
 def plot_digit(image, shape=(28, 28)):
@@ -48,11 +49,15 @@ data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
 x, y = data_loader.load_data()
 
 
-PRT = CDataPerturbRandom(0, 0.1, 100)
-Xp = PRT.perturb_dataset(x)
+G = CDataPerturbGaussian(0, 1, 100)
+R = CDataPerturbRandom(0, 1, 100)
+
+Xpr = G.perturb_dataset(x)
+Xpg = R.perturb_dataset(x)
 
 
-plot_ten_digit(Xp)
+plot_ten_digit(Xpr)
+plot_ten_digit(Xpg)
 
 #print(Xp[0,:])
 

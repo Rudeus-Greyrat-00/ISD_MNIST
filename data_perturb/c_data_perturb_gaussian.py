@@ -45,5 +45,7 @@ class CDataPerturbGaussian(CDataPerturb):
         """
         xp = x.copy()
         # https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.normal.html#numpy.random.Generator.normal
-        xp[:] += np.random.normal(loc=0, scale=self._sigma, size=xp.shape[0])
+        xp[:] += (self._sigma * np.random.normal(loc=0, scale=1, size=xp.shape[0])) / 255
+        xp[xp < self._min_value] = self._min_value
+        xp[xp > self._max_value] = self._max_value
         return xp
