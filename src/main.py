@@ -76,7 +76,7 @@ xtr, ytr, xts, yts = split_data(x, y, 0.6)
 clf = NMC()
 clf.fit(xtr, ytr)
 
-Ks = [10, 20, 50, 100, 200, 500]
+Ks = [0, 10, 20, 50, 100, 200]
 #sigmas = [10, 20, 200, 200, 500]  # not sure why 200 appears 2 times. Maybe an error in the PDF?
 # is it supposed to be like this --> sigmas = Ks ?
 sigmas = Ks
@@ -90,7 +90,7 @@ G = CDataPerturbGaussian()
 Ker = classifiy_perturb_data_acc(clf, xts, yts, Ks, R, "K")
 sigmaer = classifiy_perturb_data_acc(clf, xts, yts, Ks, G, "sigma")
 
-plt.figure(figsize=(8, 4))
+plt.figure(figsize=(10, 4))
 plt.subplot(1, 2, 1)
 plt.plot(Ks, Ker)
 plt.title("Accuracy on random noise for increasing K")
