@@ -41,6 +41,27 @@ def split_data(x, y, tr_fraction=0.5):
 def test_error(y_pred, yts):
     return (y_pred != yts).mean()
 
+def test_accuracy(y_pred, yts):
+    return (y_pred == yts).mean()
+
+def classifiy_perturb_data_err(clf, xts, yts, perturb_v, perturbator, attr):
+    error_rate = []
+    for perturb in perturb_v:
+        setattr(perturbator, attr, perturb)
+        Xp = perturbator.perturb_dataset(xts)
+        y_pred = clf.predict(Xp)
+        error_rate.append(test_error(y_pred, yts))
+    return error_rate
+
+def classifiy_perturb_data_acc(clf, xts, yts, perturb_v, perturbator, attr):
+    acc_rate = []
+    for perturb in perturb_v:
+        setattr(perturbator, attr, perturb)
+        Xp = perturbator.perturb_dataset(xts)
+        y_pred = clf.predict(Xp)
+        acc_rate.append(test_accuracy(y_pred, yts))
+    return acc_rate
+
 
 # START
 data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
@@ -52,8 +73,9 @@ clf = NMC()
 clf.fit(xtr, ytr)
 
 Ks = [10, 20, 50, 100, 200, 500]
-sigmas = [10, 20, 200, 200, 500]  # not sure why 200 appears 2 times. Maybe an error in the PDF?
+#sigmas = [10, 20, 200, 200, 500]  # not sure why 200 appears 2 times. Maybe an error in the PDF?
 # is it supposed to be like this --> sigmas = Ks ?
+sigmas = Ks
 
 Ker = []
 sigmaer = []
@@ -61,28 +83,19 @@ sigmaer = []
 R = CDataPerturbRandom()
 G = CDataPerturbGaussian()
 
-for K in Ks:
-    R.K = K
-    Xp = R.perturb_dataset(xts)
-    y_pred = clf.predict(Xp)
-    Ker.append(test_error(y_pred, yts))
+Ker = classifiy_perturb_data_acc(clf, xts, yts, Ks, R, "K")
+sigmaer = classifiy_perturb_data_acc(clf, xts, yts, Ks, G, "sigma")
 
-for sigma in sigmas:
-    G.sigma = sigma
-    Xp = G.perturb_dataset(xts)
-    y_pred = clf.predict(Xp)
-    sigmaer.append(test_error(y_pred, yts))
-
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(10, 10))
 plt.subplot(2, 1, 1)
 plt.plot(Ks, Ker)
-plt.title("Error rate on random noise for increasing K")
+plt.title("Accuracy on random noise for increasing K")
 plt.xlabel("K")
-plt.ylabel("Error rate")
+plt.ylabel("Accuracy")
 plt.subplot(2, 1, 2)
 plt.plot(sigmas, sigmaer)
-plt.title("Error rate on random noise for increasing sigma")
+plt.title("Accuracy on gaussian noise for increasing sigma")
 plt.xlabel("sigma")
-plt.ylabel("Error rate")
+plt.ylabel("Accuracy")
 plt.show()
 

@@ -29,7 +29,7 @@ class CDataPerturbGaussian(CDataPerturb):
 
     @max_value.setter
     def max_value(self, value):
-        if value < 0 or value > 1 or value >= self._min_value:
+        if value < 0 or value > 1 or value <= self._min_value:
             raise ValueError("Max value parameter should be within 0 and 1 and greater than min value")
         self._max_value = value
 
