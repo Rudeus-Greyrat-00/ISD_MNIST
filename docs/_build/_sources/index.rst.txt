@@ -10,10 +10,13 @@ Welcome to MNIST_EX1's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-..automodule::data_loader
-   :members:
+..automodule::classifier
+   :members: NMC
    :uncod_members:
 
+..automodule::data_loader
+   :members: CDataLoader, CDataLoaderMnist
+   :uncod_members:
 
 Indices and tables
 ==================
