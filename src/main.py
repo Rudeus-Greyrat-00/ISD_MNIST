@@ -46,6 +46,8 @@ def test_accuracy(y_pred, yts):
 
 def classifiy_perturb_data_err(clf, xts, yts, perturb_v, perturbator, attr):
     error_rate = []
+    if not hasattr(perturbator, attr):
+        raise ValueError("Perturbator has not a parameter named ", attr)
     for perturb in perturb_v:
         setattr(perturbator, attr, perturb)
         Xp = perturbator.perturb_dataset(xts)
@@ -55,6 +57,8 @@ def classifiy_perturb_data_err(clf, xts, yts, perturb_v, perturbator, attr):
 
 def classifiy_perturb_data_acc(clf, xts, yts, perturb_v, perturbator, attr):
     acc_rate = []
+    if not hasattr(perturbator, attr):
+        raise ValueError("Perturbator has not a parameter named ", attr)
     for perturb in perturb_v:
         setattr(perturbator, attr, perturb)
         Xp = perturbator.perturb_dataset(xts)
@@ -86,7 +90,7 @@ G = CDataPerturbGaussian()
 Ker = classifiy_perturb_data_acc(clf, xts, yts, Ks, R, "K")
 sigmaer = classifiy_perturb_data_acc(clf, xts, yts, Ks, G, "sigma")
 
-plt.figure(figsize=(10, 10))
+plt.figure(figsize=(8, 4))
 plt.subplot(1, 2, 1)
 plt.plot(Ks, Ker)
 plt.title("Accuracy on random noise for increasing K")
