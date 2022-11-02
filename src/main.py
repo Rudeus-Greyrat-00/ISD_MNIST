@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from classifier import NMC
-from data_loader import CDataLoaderMnist
-from data_perturb import CDataPerturbRandom
-from data_perturb import CDataPerturbGaussian
+from src.classifier import NMC
+from src.data_loader import CDataLoaderMnist
+from src.data_perturb import CDataPerturbRandom
+from src.data_perturb import CDataPerturbGaussian
 
 
 def plot_digit(image, shape=(28, 28)):

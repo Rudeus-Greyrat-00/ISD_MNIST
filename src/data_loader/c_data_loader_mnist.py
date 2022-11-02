@@ -1,4 +1,4 @@
-from data_loader import CDataLoader
+from src.data_loader import CDataLoader
 import pandas as pd
 import numpy as np
 
