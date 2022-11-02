@@ -68,7 +68,7 @@ def classifiy_perturb_data_acc(clf, xts, yts, perturb_v, perturbator, attr):
 
 
 # START
-data_loader = CDataLoaderMnist(filename='data/mnist_train_small.csv')
+data_loader = CDataLoaderMnist(filename='../data/mnist_train_small.csv')
 x, y = data_loader.load_data()
 
 xtr, ytr, xts, yts = split_data(x, y, 0.6)
