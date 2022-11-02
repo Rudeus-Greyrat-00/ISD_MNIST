@@ -3,6 +3,8 @@ import numpy as np
 
 from classifier import NMC
 
+# IMPORTANT: to pass the test on github, pythonpath must be updated in python-package.yml
+# export PYTHONPATH='src'
 
 class TestNMC(unittest.TestCase):
 
